@@ -1,2 +1,2 @@
-source(acled)
-source(acled_cleaning.R)
+source("scripts/acled.R")
+source("scripts/acled_cleaning.R")
