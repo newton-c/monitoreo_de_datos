@@ -1,20 +1,24 @@
 library(tidyverse)
 library(ICplots)
 library(lubridate)
+library(aweek)
 
 theme_set(theme_ic())
+set_week_start("Saturday")
+
+max_date <- Sys.Date() - wday(Sys.Date() + 1)
 
 # Añadir los datos históricos
 # reparar la definición de semana
 # monitorear las elecciones 
-# enviar a Juli los eventos que podemos mapear
+
 
 # Political Violence -----------------------------------------------------------
 # Mexico
 pv_mex <- mex_data |>
   filter(disorder_type == "Political violence") |>
-  mutate(week = week(event_date),
-         week_begins = as.POSIXct(paste(1, week, year, sep = "-" ),
+  mutate(week = date2week(event_date, numeric = TRUE, week_start = "Saturday"),
+         week_begins = as.POSIXct(paste(6, week - 2, year, sep = "-" ),
                                   format = "%u-%U-%Y"),
          event = 1)
 
@@ -22,11 +26,11 @@ pv_mex_events <- pv_mex |>
   group_by(week_begins) |>
   summarise(events = sum(event))
 
-last_week_mex <- filter(pv_mex, event_date <= max(event_date) & 
-                          event_date >= as.date(max(event_date)) - 7)
+last_week_mex <- filter(pv_mex, event_date <= max_date & 
+                          event_date >= as.Date(max_date) - 6)
 
-two_weeks_ago_mex <- filter(pv_mex, event_date <= as.date(max(event_date)) - 8 & 
-                            event_date >= as.date(max(event_date)) - 14)
+two_weeks_ago_mex <- filter(pv_mex, event_date <= as.Date(max_date) - 7 & 
+                            event_date >= as.Date(max_date) - 13)
 
 last_two_weeks_mex <- tibble(week = c(max(last_week_mex$event_date),
                                          max(two_weeks_ago_mex$event_date)),
@@ -42,7 +46,8 @@ ggplot(data = last_two_weeks_mex, aes(x = week, y = events)) +
   hline +
   theme(plot.title.position = "plot")
 
-ggplot(data = pv_mex_events, aes(x = week_begins, y = events)) +
+ggplot(subset(pv_mex_events, week_begins > min(week_begins, na.rm = TRUE)),
+                     aes(x = week_begins, y = events)) +
   geom_line(color = "#B0182A", linewidth = 2) +
   geom_text(aes(label = events), nudge_y = 10) +
   xlab("") +
@@ -54,8 +59,8 @@ ggplot(data = pv_mex_events, aes(x = week_begins, y = events)) +
 # colombia
 pv_col <- southam_data |>
   filter(disorder_type == "Political violence" & country == "Colombia") |>
-  mutate(week = week(event_date),
-         week_begins = as.POSIXct(paste(1, week, year, sep = "-" ),
+  mutate(week = date2week(event_date, numeric = TRUE, week_start = "Saturday"),
+         week_begins = as.POSIXct(paste(6, week - 2, year, sep = "-" ),
                                   format = "%u-%U-%Y"),
          event = 1)
 
@@ -63,11 +68,11 @@ pv_col_events <- pv_col |>
   group_by(week_begins) |>
   summarise(events = sum(event))
 
-last_week_col <- filter(pv_col, event_date <= max(event_date) & 
-                          event_date >= as.Date(max(event_date)) - 7)
+last_week_col <- filter(pv_col, event_date <= max_date & 
+                          event_date >= as.Date(max_date) - 6)
 
-two_weeks_ago_col <- filter(pv_col, event_date <= as.Date(max(event_date)) - 8 & 
-                              event_date >= as.Date(max(event_date)) - 14)
+two_weeks_ago_col <- filter(pv_col, event_date <= as.Date(max_date) - 7 & 
+                              event_date >= as.Date(max_date) - 13)
 
 last_two_weeks_col <- tibble(week = c(max(last_week_col$event_date),
                                       max(two_weeks_ago_col$event_date)),
@@ -79,13 +84,14 @@ ggplot(data = last_two_weeks_col, aes(x = week, y = events)) +
   geom_text(aes(label = events), nudge_y = 10) +
   xlab("") +
   ylab("Numero de eventos") +
-  labs(title = "Violencia política en braombia") +
+  labs(title = "Violencia política en Colombia") +
   hline +
   theme(plot.title.position = "plot")
 
-ggplot(data = pv_col_events, aes(x = week_begins, y = events)) +
-  geom_line(color = "#AB082D", linewidth = 2) +
+ggplot(subset(pv_col_events, week_begins > min(week_begins, na.rm = TRUE)),
+                     aes(x = week_begins, y = events)) +
   geom_text(aes(label = events), nudge_y = 10) +
+  geom_line(color = "#B0182A", linewidth = 2) +
   xlab("") +
   ylab("Numero de eventos") +
   labs(title = "Violencia política en Colombia") +
@@ -95,8 +101,8 @@ ggplot(data = pv_col_events, aes(x = week_begins, y = events)) +
 # Brasil
 pv_bra <- southam_data |>
   filter(disorder_type == "Political violence" & country == "Brazil") |>
-  mutate(week = week(event_date),
-         week_begins = as.POSIXct(paste(1, week, year, sep = "-" ),
+  mutate(week = date2week(event_date, numeric = TRUE, week_start = "Saturday"),
+         week_begins = as.POSIXct(paste(6, week - 2, year, sep = "-" ),
                                   format = "%u-%U-%Y"),
          event = 1)
 
@@ -104,11 +110,11 @@ pv_bra_events <- pv_bra |>
   group_by(week_begins) |>
   summarise(events = sum(event))
 
-last_week_bra <- filter(pv_bra, event_date <= max(event_date) & 
-                          event_date >= as.Date(max(event_date)) - 7)
+last_week_bra <- filter(pv_bra, event_date <= max_date & 
+                          event_date >= as.Date(max_date) - 6)
 
-two_weeks_ago_bra <- filter(pv_bra, event_date <= as.Date(max(event_date)) - 8 & 
-                              event_date >= as.Date(max(event_date)) - 14)
+two_weeks_ago_bra <- filter(pv_bra, event_date <= as.Date(max_date) - 7 & 
+                              event_date >= as.Date(max_date) - 13)
 
 last_two_weeks_bra <- tibble(week = c(max(last_week_bra$event_date),
                                       max(two_weeks_ago_bra$event_date)),
@@ -120,11 +126,12 @@ ggplot(data = last_two_weeks_bra, aes(x = week, y = events)) +
   geom_text(aes(label = events), nudge_y = 10) +
   xlab("") +
   ylab("Numero de eventos") +
-  labs(title = "Violencia política en braombia") +
+  labs(title = "Violencia política en Brasil") +
   hline +
   theme(plot.title.position = "plot")
 
-ggplot(data = pv_bra_events, aes(x = week_begins, y = events)) +
+ggplot(subset(pv_bra_events, week_begins > min(week_begins, na.rm = TRUE)),
+                     aes(x = week_begins, y = events)) +
   geom_line(color = "#589B42", linewidth = 2) +
   geom_text(aes(label = events), nudge_y = 10) +
   xlab("") +
@@ -133,7 +140,7 @@ ggplot(data = pv_bra_events, aes(x = week_begins, y = events)) +
   hline +
   theme(plot.title.position = "plot")
 
-# Civilian Targetina -----------------------------------------------------------
+# Civilian Targeting -----------------------------------------------------------
 # Mexico
 ct_mex <- pv_mex |>
   filter(civilian_targeting == "Civilian targeting") |>
@@ -262,14 +269,14 @@ pv_latam_events <- latam_data |>
   group_by(week_begins) |>
   summarise(events = sum(event))
 
-last_week_latam <- filter(latam_data, event_date <= max(event_date) & 
-                          event_date >= as.Date(max(event_date)) - 7) |>
+last_week_latam <- filter(latam_data, event_date <= max_date & 
+                          event_date >= as.Date(max_date) - 7) |>
   group_by(country) |>
   summarise(events_last_week = sum(event))
 
 two_weeks_ago_latam <- filter(latam_data,
-                              event_date <= as.Date(max(event_date)) - 8 & 
-                              event_date >= as.Date(max(event_date)) - 14) |>
+                              event_date <= as.Date(max_date) - 8 & 
+                              event_date >= as.Date(max_date) - 14) |>
   group_by(country) |>
   summarise(events_two_weeks_ago = sum(event))
 
