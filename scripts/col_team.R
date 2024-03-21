@@ -40,7 +40,7 @@ last_two_weeks_col <- tibble(week = c(max(last_week_col$event_date),
 
 ggplot(data = last_two_weeks_col, aes(x = week, y = events)) +
   geom_col(fill = "#AB082D") +
-  geom_text(aes(label = events), nudge_y = 10) +
+  geom_text(aes(label = events), nudge_y = 2) +
   xlab("") +
   ylab("Numero de eventos") +
   labs(title = "Violencia política en Colombia") +
@@ -49,7 +49,7 @@ ggplot(data = last_two_weeks_col, aes(x = week, y = events)) +
 
 ggplot(subset(pv_col_events, week_begins > min(week_begins, na.rm = TRUE)),
                      aes(x = week_begins, y = events)) +
-  geom_text(aes(label = events), nudge_y = 10) +
+  geom_text(aes(label = events), nudge_y = 5) +
   geom_line(color = "#AB082D", linewidth = 2) +
   xlab("") +
   ylab("Numero de eventos") +
