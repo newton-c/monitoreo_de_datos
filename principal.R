@@ -5,11 +5,14 @@ library(aweek)
 library(httr)
 library(jsonlite)
 library(readr)
+library(zoo)
+library(gt)
 
 theme_set(theme_ic())
 set_week_start("Saturday")
 
 max_date <- Sys.Date() - wday(Sys.Date() + 1)
+plot_month <- as.character(format((Sys.Date()), "%B %Y"))
 
 source("scripts/acled.R")
 source("scripts/ven_team.R")
