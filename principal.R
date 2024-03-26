@@ -7,6 +7,7 @@ library(jsonlite)
 library(readr)
 library(zoo)
 library(gt)
+library(sf)
 
 theme_set(theme_ic())
 set_week_start("Saturday")

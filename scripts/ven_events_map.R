@@ -1,6 +1,5 @@
 # añadir una tableta con las cifras en el mapa
 
-library(sf)
  my_spdf <- st_read("data/Venezuela Esequibo/Estados_Venezuela.shp") |>
    filter(ID != 24)
 
