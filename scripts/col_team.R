@@ -15,9 +15,11 @@
 #     Remote explosive/landmine/IED               
 #     Sexual violence
 
+mes_actual <- format(Sys.Date(), "%m")
 # Political violence
 pv_col <- southam_data |>
-  filter(disorder_type == "Political violence" & country == "Colombia") |>
+  filter(disorder_type == "Political violence" & country == "Colombia" &
+           event_date < as.Date(paste0(format(Sys.Date(), "%Y-%m"), "-01"))) |>
   mutate(week = date2week(event_date, numeric = TRUE, week_start = "Saturday"),
          week_begins = as.POSIXct(paste(6, week - 2, year, sep = "-" ),
                                   format = "%u-%U-%Y"),
@@ -79,7 +81,7 @@ ggplot() +
   scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
   scale_x_date(breaks = pv_col_event_month$begin,
                labels = month(pv_col_event_month$begin, label = TRUE)) +
-  labs(title = "Political Violence Events in Colombia",
+  labs(title = "Primary Indicators of Violence in Colombia",
        subtitle = "By event type",
        caption = paste(plot_month,
                        "Souce: Armed Conflcit Location & Events Database",
@@ -122,7 +124,7 @@ ggplot() +
   scale_y_continuous(expand = expansion(mult = c(0, 0.2))) +
   scale_x_date(breaks = pv_col_sub_event_month$begin,
                labels = month(pv_col_sub_event_month$begin, label = TRUE)) +
-  labs(title = "Political Violence Events in Colombia",
+  labs(title = "Primary Indicators of Violence in Colombia",
        subtitle = "By sub-event type",
        caption = paste(plot_month,
                        "Souce: Armed Conflcit Location & Events Database",
