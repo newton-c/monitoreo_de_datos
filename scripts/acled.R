@@ -15,22 +15,6 @@ email <- inputs[[2, 1]]
 rows_returned <- 5000
 page <- 1
 
-#caribe_list <- tibble()
-#get_caribe_data <- function() {
-#if (rows_returned == 5000 & page < 20) {
-#centam_url = paste0("https://api.acleddata.com/acled/read?key=",
-#                key, "&email=", email, "&region=14", "&page=", page)
-#centam_res = GET(centam_url)
-#centam_data = fromJSON(rawToChar(centam_res$content))$data
-#caribe_list[[length(caribe_list) + 1]] <- centam_data
-#rows_returned <- nrow(centam_data)
-#page <- page + 1
-#return(caribe_list)
-#} else
-#  return(caribe_list)
-#}
-#test <- full_join(caribe_list, caribe_data)
-
 southam_url = paste0("https://api.acleddata.com/acled/read?key=",
                     key, "&email=", email, "&region=15")
 southam_res = GET(southam_url)
@@ -45,3 +29,5 @@ mex_url = paste0("https://api.acleddata.com/acled/read?key=",
                      key, "&email=", email, "&iso=484")
 mex_res = GET(mex_url)
 mex_data = fromJSON(rawToChar(mex_res$content))$data
+
+

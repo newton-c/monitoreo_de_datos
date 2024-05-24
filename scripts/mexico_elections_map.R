@@ -3,6 +3,7 @@ mex_shp_file <- paste("data/mex_admbnda_govmex_20210618_SHP",
 mex_spd <- st_read(mex_shp_file) 
 
 # Events 
+Sys.setlocale("LC_ALL", "en_US")
 ggplot() + 
   geom_sf(data = mex_spd, size = 1.5, color = "#3B3B3B", fill = "#FAFAFA") + 
   geom_point(data = subset(mex_officials),
@@ -19,8 +20,9 @@ ggplot() +
        subtitle = paste0("Data from ", format(min(as.Date(mex_officials$event_date)),
                                               "%B %d, %Y"),
                          " to ",
-                         format(max(as.Date(mex_officials$event_date)),
-                                "%B %d, to %Y")),
+                       #  format(max(as.Date(mex_officials$event_date)),
+                       #         "%B %d, to %Y")),
+                       "May 17, 2024"),
        caption = paste(plot_month,
                        "Source: Armed Conflict Location & Events Database",
                        sep = "\n")) +
@@ -43,6 +45,8 @@ ggplot() +
   ic_logo(x = -115, y = 15, hjust = 0, size = 6)
 
  # En Español
+Sys.setlocale("LC_ALL", "es_ES")
+
 ggplot() + 
   geom_sf(data = mex_spd, size = 1.5, color = "#3B3B3B", fill = "#FAFAFA") + 
   geom_point(data = subset(mex_officials),
@@ -59,9 +63,10 @@ ggplot() +
        subtitle = paste0("Datos del ", format(min(as.Date(mex_officials$event_date)),
                                               "%d de %B de %Y"),
                          " al ",
-                         format(max(as.Date(mex_officials$event_date)),
-                                "%d de %B de %Y")),
-       caption = paste("Abril 2024",
+                       #  format(max(as.Date(mex_officials$event_date)),
+                        #        "%d de %B de %Y")),
+                       "17 de mayo de 2024"),
+       caption = paste(gráfico_mes,
                        "Fuente: Armed Conflict Location & Events Database",
                        sep = "\n")) +
   coord_sf() +

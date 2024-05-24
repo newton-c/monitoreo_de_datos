@@ -29,8 +29,9 @@ ggplot(data = mex_officials_month, mapping = aes(x = year_mon, y = events)) +
        subtitle = paste0("Data from ", format(min(as.Date(mex_officials$event_date)),
                                               "%B %d, %Y"),
                          " to ",
-                         format(max(as.Date(mex_officials$event_date)),
-                                "%B %d, to %Y")),
+                       #  format(max(as.Date(mex_officials$event_date)),
+                        #        "%B %d, to %Y")),
+                       "May 17, 2024"),
        caption = paste(plot_month,
                        "Source: Armed Conflict Location & Events Database",
                        sep = "\n")) +
@@ -69,8 +70,9 @@ ggplot(data = mex_officials_month, mapping = aes(x = year_mon, y = events)) +
        subtitle = paste0("Datos del ", format(min(as.Date(mex_officials$event_date)),
                                               "%d de %B de %Y"),
                          " al ",
-                         format(max(as.Date(mex_officials$event_date)),
-                                "%d de %B de %Y")),
+                        # format(max(as.Date(mex_officials$event_date)),
+                        #        "%d de %B de %Y")),
+       "17 de mayo de 2024"),
        caption = paste(gráfico_mes,
                        "Fuente: Armed Conflict Location & Events Database",
                        sep = "\n")) +
@@ -95,6 +97,7 @@ Sys.setlocale("LC_ALL", "en_US")
 source("scripts/mexico_elections_map.R")
 
 # geographic hotspots
+Sys.setlocale("LC_ALL", "en_US")
 mex_officials_admin1 <- mex_officials |>
   group_by(admin1) |>
   summarise(events = sum(event, na.rm = TRUE)) 
@@ -112,8 +115,9 @@ ggplot() +
        subtitle = paste0("Data from ", format(min(as.Date(mex_officials$event_date)),
                                               "%B %d, %Y"),
                          " to ",
-                         format(max(as.Date(mex_officials$event_date)),
-                                "%B %d, to %Y")),
+                       #  format(max(as.Date(mex_officials$event_date)),
+                      #          "%B %d, to %Y")),
+       "May 17, 2024"),
        caption = paste(plot_month,
                        "Source: Armed Conflict Location & Events Database",
                        sep = "\n")) +
@@ -137,9 +141,11 @@ ggplot() +
         panel.grid.major.y = ggplot2::element_blank(),
         panel.grid.major.x = ggplot2::element_line(linetype = 2,
                                                    color = "#b3b3b3")) +
-  ic_logo(x = 1, y = 12.5, hjust = 1, size = 6)
+  ic_logo(x = 1, y = 10.5, hjust = 1, size = 6)
 
 # en español
+Sys.setlocale("LC_ALL", "es_ES")
+
 ggplot() +
   geom_col(data = mex_officials_admin1,
            mapping = aes(x = fct_reorder(admin1, events), y = events),
@@ -153,8 +159,9 @@ ggplot() +
        subtitle = paste0("Datos del ", format(min(as.Date(mex_officials$event_date)),
                                              "%d de %B de %Y"),
                          " al ",
-                         format(max(as.Date(mex_officials$event_date)),
-                                    "%d de %B de %Y")),
+                        # format(max(as.Date(mex_officials$event_date)),
+                        #            "%d de %B de %Y")),
+                        "17 de mayo de 2024"),
        caption = paste(gráfico_mes,
                        "Fuente: Armed Conflict Location & Events Database",
                        sep = "\n")) +
@@ -178,7 +185,7 @@ ggplot() +
         panel.grid.major.y = ggplot2::element_blank(),
         panel.grid.major.x = ggplot2::element_line(linetype = 2,
                                                    color = "#b3b3b3")) +
-  ic_logo(x = 1, y = 12.5, hjust = 1, size = 6)
+  ic_logo(x = 1, y = 10.5, hjust = 1, size = 6)
 
 # groups involved
 mex_officials_group <- mex_officials |>
@@ -216,3 +223,4 @@ ggplot() +
         legend.text = element_text(family = "Roboto", color = "#3B3B3B",
                                    size = 11),
         legend.title = element_text(size = 14))
+

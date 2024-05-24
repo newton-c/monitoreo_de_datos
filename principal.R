@@ -35,7 +35,5 @@ ic_logo <- function(x, y, hjust = 0, vjust = 0, size = 8) {
 }
 
 source("scripts/acled.R")
-#source("scripts/ven_team.R")
 source("scripts/col_team.R")
 source("scripts/mexico_elections.R")
-#source("scripts/acled_cleaning.R")
